@@ -21,21 +21,20 @@ export default function LoginPage() {
   const router = useRouter();
   const { entrar } = useAuth();
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setCarregando(true);
-    setErro(""); // ← limpa o erro anterior, mas o novo erro nunca é exibido
+ async function handleSubmit(e: React.FormEvent) {
+  e.preventDefault();
+  setCarregando(true);
+  setErro("");
 
-    try {
-      await entrar(email, senha);
-      router.push("/dashboard");
-    } catch {
-      // 🐛 BUG 01 — catch vazio: o erro é silenciado.
-      // O usuário não sabe o que aconteceu. Adicione: setErro("E-mail ou senha inválidos.")
-    } finally {
-      setCarregando(false);
-    }
+  try {
+    await entrar(email, senha);
+    router.push("/dashboard");
+  } catch {
+    setErro("E-mail ou senha inválidos.");
+  } finally {
+    setCarregando(false);
   }
+}
 
   return (
     <div
